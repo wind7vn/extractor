@@ -191,7 +191,13 @@ def main():
         sys.exit(1)
 
     dat_file = sys.argv[1]
-    output_dir = sys.argv[2] if len(sys.argv) > 2 else "extracted_files"
+    if len(sys.argv) > 2:
+        output_dir = sys.argv[2]
+    else:
+        base_name = os.path.basename(dat_file)
+        output_dir = os.path.splitext(base_name)[0]
+        if not output_dir:
+            output_dir = "extracted_files"
 
     if not os.path.isfile(dat_file):
         print(f"{ERROR} File '{dat_file}' không tồn tại hoặc không phải là file hợp lệ.")

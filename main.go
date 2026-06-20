@@ -174,9 +174,16 @@ func main() {
 	}
 
 	datFile := os.Args[1]
-	outputDir := "extracted_files"
+	outputDir := ""
 	if len(os.Args) > 2 {
 		outputDir = os.Args[2]
+	} else {
+		baseName := filepath.Base(datFile)
+		ext := filepath.Ext(baseName)
+		outputDir = baseName[:len(baseName)-len(ext)]
+		if outputDir == "" {
+			outputDir = "extracted_files"
+		}
 	}
 
 	data, err := os.ReadFile(datFile)
